@@ -9,6 +9,7 @@ pipeline {
                 """
             }
         }
+        
         stage('Remove') {
             steps {
                 sh """
