@@ -27,5 +27,20 @@ pipeline {
                 """
             }
         }
+
+        stage('SSH and Run Docker') {
+            steps {
+                sshagent(['management-vm']){
+                    sh """
+                        ssh -o StrictHostKeyChecking=no phuocdt@14.9.0.9 <<EOF
+                        docker pull harbor.nobisoft.com.vn/constellation/harbor-image-test
+                        docker stop harbor-image-test || true
+                        docker rm harbor-image-test || true
+                        docker run -d -p 80:8000 harbor.nobisoft.com.vn/constellation/harbor-image-test
+                        EOF
+                    """
+                }
+            }
+        }
     }
 }
