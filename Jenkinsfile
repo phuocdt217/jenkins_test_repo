@@ -9,10 +9,10 @@ pipeline {
                 """
             }
         }
-        stage('Run') {
+        stage('Remove') {
             steps {
                 sh """
-                docker run -p 8080:8000 harbor-image-test
+                docker rm -f harbor-image-test
                 """
             }
         }
