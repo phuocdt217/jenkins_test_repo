@@ -5,15 +5,25 @@ pipeline {
         stage('Build') {
             steps {
                 sh """
-                docker build -f docker/Dockerfile -t harbor-image-test .
+                docker build -f docker/Dockerfile -t harbor.nobisoft.com.vn/constellation/harbor-image-test .
                 """
             }
         }
-        
-        stage('Remove') {
+
+        stage('Login To Harbor') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'harbor_cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                    echo $PASSWORD | docker login harbor.nobisoft.com.vn -u $USERNAME --password-stdin
+                    """
+                }
+            }
+        }
+
+        stage('Push Image To Harbor') {
             steps {
                 sh """
-                docker rm -f harbor-image-test
+                docker push harbor.nobisoft.com.vn/constellation/harbor-image-test
                 """
             }
         }
