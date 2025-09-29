@@ -13,9 +13,8 @@ pipeline {
         stage('Login To Harbor') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'harbor_cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh """
-                    echo "$PASSWORD" | docker login harbor.nobisoft.com.vn -u "$USERNAME" --password-stdin
-                    """
+                    sh('echo $PASSWORD | docker login harbor.nobisoft.com.vn -u $USERNAME --password-stdin')
+                    
                 }
             }
         }
@@ -30,7 +29,7 @@ pipeline {
 
         stage('SSH and Run Docker') {
             steps {
-                sshagent(['management-vm']){
+                sshagent(['management-vm']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no phuocdt@14.9.0.9 <<EOF
                         docker pull harbor.nobisoft.com.vn/constellation/harbor-image-test
