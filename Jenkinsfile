@@ -14,7 +14,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'harbor_cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
-                    echo $PASSWORD | docker login harbor.nobisoft.com.vn -u $USERNAME --password-stdin
+                    echo "$PASSWORD" | docker login harbor.nobisoft.com.vn -u "$USERNAME" --password-stdin
                     """
                 }
             }
