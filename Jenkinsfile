@@ -31,13 +31,13 @@ pipeline {
             steps {
                 sshagent(['management-vm']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no root@14.9.0.32 <<EOF
+                        ssh -o StrictHostKeyChecking=no root@14.9.0.32 << 'ENDOFSSH'
                         docker pull harbor.nobisoft.com.vn/constellation/harbor-image-test
                         docker stop harbor-image-test || true
                         docker rm harbor-image-test || true
                         docker run --name harbor-image-test -d -p 9980:8000 harbor.nobisoft.com.vn/constellation/harbor-image-test
                         docker ps | grep harbor-image-test
-                        EOF 
+                        'ENDOFSSH' 
                     """
                 }
             }
