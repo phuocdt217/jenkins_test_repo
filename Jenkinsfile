@@ -37,7 +37,7 @@ pipeline {
                         docker rm harbor-image-test || true
                         docker run --name harbor-image-test -d -p 9980:8000 harbor.nobisoft.com.vn/constellation/harbor-image-test
                         docker ps | grep harbor-image-test
-                        'ENDOFSSH' 
+ENDOFSSH
                     """
                 }
             }
