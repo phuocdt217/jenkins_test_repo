@@ -35,8 +35,9 @@ pipeline {
                         docker pull harbor.nobisoft.com.vn/constellation/harbor-image-test
                         docker stop harbor-image-test || true
                         docker rm harbor-image-test || true
-                        docker run -d -p 9980:8000 harbor.nobisoft.com.vn/constellation/harbor-image-test
-                        EOF
+                        docker run --name harbor-image-test -d -p 9980:8000 harbor.nobisoft.com.vn/constellation/harbor-image-test
+                        docker logs -f harbor-image-test
+                        EOF 
                     """
                 }
             }
